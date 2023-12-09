@@ -55,10 +55,10 @@ public class Robot extends TimedRobot {
     ledController.updatePeriodic();
 
     if (m_driverController.getAButton()) {
-      ledController.twoColorBlinkPattern(1.0, 1.0, 1.0, 0.0);
+      ledController.twoColorBlinkPattern(0.91, 0.67, 1.0);
     }
     if (m_driverController.getBButton()) {
-      ledController.colorChange(0.8);
+      ledController.colorChange(0.87);
     }
   }
 

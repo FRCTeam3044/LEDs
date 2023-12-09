@@ -1,7 +1,10 @@
 package team.frcteam3044;
 
+import java.lang.reflect.Array;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.util.Color;
 
 public class LEDController {
     /**
@@ -9,21 +12,17 @@ public class LEDController {
      */
     Spark blinkin;
     /**
-     * Save of time1 from twoColorBlinkPattern.
+     * Save of time from twoColorBlinkPattern.
      */
-    double colorOneBlinkTime = 0.0;
+    double BlinkTime = 0.0;
     /**
      * Save of color1 from twoColorBlinkPattern.
      */
-    double blinkColorOne = 0.0;
-    /**
-     * Save of time2 from twoColorBlinkPattern.
-     */
-    double colorTwoBlinkTime = 0.0;
+    Colors blinkColorOne = Colors.GOLD;
     /**
      * Save of color2 from twoColorBlinkPattern.
      */
-    double blinkColorTwo = 0.0;
+    Colors blinkColorTwo = Colors.PURPLE;
     /**
      * Times the LEDs.
      */
@@ -31,13 +30,32 @@ public class LEDController {
     /**
      * Sets it to one color.
      */
-    double solidColor = 0.0;
+    Colors solidColor = Colors.RED; // red
+    /*
+     * 
+     */
+    double[] colorList = {0.61, 0.91, 0.67};
     /**
      * True = blinking,
      * False = solid.
      */
     boolean solidOrBlink = false;
+    /**
+     * 
+     */
+    public enum Colors {
+        RED,
+        PURPLE,
+        GOLD
+    }
 
+    double timeSinceLastColorChange = timer.get();
+    /**
+     * Checks what step of the blink cycle it was on
+     * 0 = color 1
+     * 1 = color 2
+     */
+    int blinkStep = 0;
     /**
      * Turn on the LEDs.
      * 
@@ -50,17 +68,16 @@ public class LEDController {
     /**
      * Make pattern for the LEDs!
      * 
-     * @param time1  - The amount of time the color1 stays up.
      * @param color1 - The first color in the pattern.
-     * @param time2  - The amount of time color2 stays up.
      * @param color2 - The second color in the pattern.
+     * @param time - The amount of time each color is active for.
      */
-    public void twoColorBlinkPattern(double time1, double color1, double time2, double color2) {
+    public void twoColorBlinkPattern(double color1, double color2, double time) {
         solidOrBlink = true;
-        colorOneBlinkTime = time1;
-        colorTwoBlinkTime = time2;
+        BlinkTime = time;
         blinkColorOne = color1;
         blinkColorTwo = color2;
+        timer.start();
     }
 
     /**
@@ -69,10 +86,19 @@ public class LEDController {
     public void updatePeriodic() {
         if (solidOrBlink == true) {
             // Blinking pattern.
-            // blinkin.set()
+            if (timer.get() >= BlinkTime && blinkStep != 1) {
+                timer.reset();
+                blinkStep = 1;
+                blinkin.set(colorList[]);
+            }
+            if (timer.get() >= BlinkTime && blinkStep != 0) {
+                timer.reset();
+                blinkStep = 0;
+                blinkin.set();
+            }
         } else {
-            // Solid Colour
-
+            // Solid Color
+            blinkin.set(solidColor);
         }
     }
 
