@@ -1,10 +1,7 @@
 package team.frcteam3044;
 
-import java.lang.reflect.Array;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.util.Color;
 
 public class LEDController {
     /**
@@ -32,7 +29,7 @@ public class LEDController {
      */
     Colors solidColor = Colors.RED; // red
     /*
-     * 
+     * This holds the values for the colors.
      */
     double[] colorList = {0.61, 0.91, 0.67};
     /**
@@ -41,14 +38,16 @@ public class LEDController {
      */
     boolean solidOrBlink = false;
     /**
-     * 
+     * Holds all the colors.
      */
     public enum Colors {
         RED,
         PURPLE,
         GOLD
     }
-
+    /**
+     * Tells you amount of time passed since last color change
+     */
     double timeSinceLastColorChange = timer.get();
     /**
      * Checks what step of the blink cycle it was on
@@ -72,7 +71,7 @@ public class LEDController {
      * @param color2 - The second color in the pattern.
      * @param time - The amount of time each color is active for.
      */
-    public void twoColorBlinkPattern(double color1, double color2, double time) {
+    public void twoColorBlinkPattern(Colors color1, Colors color2, double time) {
         solidOrBlink = true;
         BlinkTime = time;
         blinkColorOne = color1;
@@ -89,16 +88,16 @@ public class LEDController {
             if (timer.get() >= BlinkTime && blinkStep != 1) {
                 timer.reset();
                 blinkStep = 1;
-                blinkin.set(colorList[]);
+                blinkin.set(colorList[blinkColorOne.ordinal()]);
             }
             if (timer.get() >= BlinkTime && blinkStep != 0) {
                 timer.reset();
                 blinkStep = 0;
-                blinkin.set();
+                blinkin.set(colorList[blinkColorTwo.ordinal()]);
             }
         } else {
             // Solid Color
-            blinkin.set(solidColor);
+            blinkin.set(colorList[solidColor.ordinal()]);
         }
     }
 
@@ -108,7 +107,7 @@ public class LEDController {
      * @param colorValue - 0-1 because it works like a motor.
      *                   Use specific number corresponding to the color you desire.
      */
-    public void colorChange(double colorValue) {
+    public void colorChange(Colors colorValue) {
         solidOrBlink = false;
 
         solidColor = colorValue;
