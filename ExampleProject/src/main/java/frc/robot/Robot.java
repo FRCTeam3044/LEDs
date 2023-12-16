@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.frcteam3044.LEDController;
+import team.frcteam3044.LEDController.Colors;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -55,10 +56,10 @@ public class Robot extends TimedRobot {
     ledController.updatePeriodic();
 
     if (m_driverController.getAButton()) {
-      ledController.twoColorBlinkPattern(0.91, 0.67, 1.0);
+      ledController.twoColorBlinkPattern(Colors.PURPLE, Colors.GOLD, 1.0);
     }
     if (m_driverController.getBButton()) {
-      ledController.colorChange(0.87);
+      ledController.colorChange(Colors.RED);
     }
   }
 
