@@ -27,7 +27,6 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   LEDController ledController;
   XboxController m_driverController = new XboxController(0);
-
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -61,6 +60,7 @@ public class Robot extends TimedRobot {
     if (m_driverController.getBButton()) {
       ledController.colorChange(Colors.RED);
     }
+
   }
 
   /**
